@@ -6,17 +6,21 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private ChangerHalthbar _changerHalthbar;
-
     public Slider Slider;
 
-    private void Update()
-    {
-        ChangeHealth();
-    }
+    [SerializeField] private ChangerHalthbar _changerHalthbar;
 
     public void ChangeHealth()
     {
-        Slider.value = Mathf.MoveTowards(Slider.value, _changerHalthbar.CurrentValue, _changerHalthbar.StepChange * Time.deltaTime);
+        StartCoroutine(ChangeVolume());
+    }
+
+    private IEnumerator ChangeVolume()
+    {
+        while (Slider.value != _changerHalthbar.CurrentValue)
+        {
+            Slider.value = Mathf.MoveTowards(Slider.value, _changerHalthbar.CurrentValue, _changerHalthbar.StepChange * Time.deltaTime);
+            yield return null;
+        }
     }
 }
