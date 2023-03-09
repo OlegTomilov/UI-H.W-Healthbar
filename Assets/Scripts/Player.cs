@@ -1,26 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-
+using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
-    public Slider Slider;
+    public float StepChange = 10f;
+    public float CurrentValue = 50f;
+    private int _maxHealth = 100;
+    private int _minHealth = 0;
 
     [SerializeField] private ChangerHalthbar _changerHalthbar;
 
-    public void ChangeHealth()
+    public static event UnityAction ChangeHealthBar;
+
+    private void Start()
     {
-        StartCoroutine(ChangeVolume());
+        ChangeHealthBar += _changerHalthbar.ChangeHealth;
     }
 
-    private IEnumerator ChangeVolume()
+    public void DecreaseHealth()
     {
-        while (Slider.value != _changerHalthbar.CurrentValue)
+        if (CurrentValue > _minHealth)
         {
-            Slider.value = Mathf.MoveTowards(Slider.value, _changerHalthbar.CurrentValue, _changerHalthbar.StepChange * Time.deltaTime);
-            yield return null;
+            CurrentValue -= StepChange;
+            ChangeHealthBar.Invoke();
+        }
+    }
+
+    public void IncreaseHealth()
+    {
+        if (CurrentValue < _maxHealth)
+        {
+            CurrentValue += StepChange;
+            ChangeHealthBar.Invoke();
         }
     }
 }

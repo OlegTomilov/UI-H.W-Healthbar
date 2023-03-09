@@ -587,8 +587,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1170623386}
-        m_TargetAssemblyTypeName: ChangerHalthbar, Assembly-CSharp
+      - m_Target: {fileID: 1170623387}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
         m_MethodName: DecreaseHealth
         m_Mode: 1
         m_Arguments:
@@ -867,9 +867,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af8f8ee5971ce2343a26b8de7d6c4793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StepChange: 10
-  CurrentValue: 50
-  _player: {fileID: 0}
+  Slider: {fileID: 1836910248}
+  _player: {fileID: 1170623387}
 --- !u!114 &1170623387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -882,7 +881,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2579ad0d529294f84ddc232e0b396d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Slider: {fileID: 1836910248}
+  StepChange: 10
+  CurrentValue: 50
   _changerHalthbar: {fileID: 1170623386}
 --- !u!1 &1373100356
 GameObject:
@@ -1172,8 +1172,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1170623386}
-        m_TargetAssemblyTypeName: ChangerHalthbar, Assembly-CSharp
+      - m_Target: {fileID: 1170623387}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
         m_MethodName: IncreaseHealth
         m_Mode: 1
         m_Arguments:

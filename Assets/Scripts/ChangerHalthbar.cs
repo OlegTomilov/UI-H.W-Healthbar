@@ -1,16 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Player))]
 
 public class ChangerHalthbar : MonoBehaviour
 {
-    public float StepChange = 10f;
-    public float CurrentValue = 50f;
+    public Slider Slider;
 
-    public static event UnityAction ChangeHealthBar;
+    private Coroutine _changeValue;
 
     [SerializeField] private Player _player;
 
@@ -18,18 +17,24 @@ public class ChangerHalthbar : MonoBehaviour
     private void Start()
     {
         _player = GetComponent<Player>();
-        ChangeHealthBar += _player.ChangeHealth;
     }
 
-    public void DecreaseHealth()
+    public void ChangeHealth()
     {
-        CurrentValue -= StepChange;
-        ChangeHealthBar.Invoke();
+        if (_changeValue != null)
+        {
+            StopCoroutine(_changeValue);
+        }
+
+        _changeValue = StartCoroutine(ChangeValue());
     }
 
-    public void IncreaseHealth()
+    private IEnumerator ChangeValue()
     {
-        CurrentValue += StepChange;
-        ChangeHealthBar.Invoke();
+        while (Slider.value != _player.CurrentValue)
+        {
+            Slider.value = Mathf.MoveTowards(Slider.value, _player.CurrentValue, _player.StepChange * Time.deltaTime);
+            yield return null;
+        }
     }
 }
