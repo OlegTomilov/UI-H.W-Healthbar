@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 [RequireComponent(typeof(Player))]
 
-public class ChangerHalthbar : MonoBehaviour
+public class HealthbarChanger : MonoBehaviour
 {
     public Slider Slider;
 

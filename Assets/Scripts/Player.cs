@@ -10,30 +10,34 @@ public class Player : MonoBehaviour
     private int _maxHealth = 100;
     private int _minHealth = 0;
 
-    [SerializeField] private ChangerHalthbar _changerHalthbar;
+    [SerializeField] private HealthbarChanger _changerHalthbar;
 
-    public static event UnityAction ChangeHealthBar;
+    public static event UnityAction ChangedHealth;
 
     private void Start()
     {
-        ChangeHealthBar += _changerHalthbar.ChangeHealth;
+        ChangedHealth += _changerHalthbar.ChangeHealth;
     }
 
-    public void DecreaseHealth()
+    private void Update()
     {
-        if (CurrentValue > _minHealth)
-        {
-            CurrentValue -= StepChange;
-            ChangeHealthBar.Invoke();
-        }
+        CurrentValue = Mathf.Clamp(CurrentValue, _minHealth, _maxHealth);
     }
 
-    public void IncreaseHealth()
+    public void OnDisable()
     {
-        if (CurrentValue < _maxHealth)
-        {
-            CurrentValue += StepChange;
-            ChangeHealthBar.Invoke();
-        }
+        ChangedHealth -= _changerHalthbar.ChangeHealth;
+    }
+
+    public void Damage()
+    {
+        CurrentValue -= StepChange;
+        ChangedHealth.Invoke();
+    }
+
+    public void Heal()
+    {
+        CurrentValue += StepChange;
+        ChangedHealth.Invoke();
     }
 }
