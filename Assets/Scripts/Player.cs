@@ -5,14 +5,17 @@ using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
-    public float StepChange = 10f;
-    public float CurrentValue = 50f;
+    private float _stepChange = 10f;
+    private float _currentValue = 50f;
     private int _maxHealth = 100;
     private int _minHealth = 0;
 
     [SerializeField] private HealthbarChanger _changerHalthbar;
 
     public static event UnityAction ChangedHealth;
+
+    public float StepChange => _stepChange;
+    public float CurrentValue => _currentValue;
 
     private void Start()
     {
@@ -21,7 +24,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        CurrentValue = Mathf.Clamp(CurrentValue, _minHealth, _maxHealth);
+        _currentValue = Mathf.Clamp(_currentValue, _minHealth, _maxHealth);
     }
 
     public void OnDisable()
@@ -31,13 +34,13 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
-        CurrentValue -= StepChange;
+        _currentValue -= StepChange;
         ChangedHealth.Invoke();
     }
 
     public void Heal()
     {
-        CurrentValue += StepChange;
+        _currentValue += StepChange;
         ChangedHealth.Invoke();
     }
 }

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class HealthbarChanger : MonoBehaviour
 {
-    public Slider Slider;
+    [SerializeField] private Slider _slider;
 
     private Coroutine _changeValue;
 
@@ -31,9 +31,9 @@ public class HealthbarChanger : MonoBehaviour
 
     private IEnumerator ChangeValue()
     {
-        while (Slider.value != _player.CurrentValue)
+        while (_slider.value != _player.CurrentValue)
         {
-            Slider.value = Mathf.MoveTowards(Slider.value, _player.CurrentValue, _player.StepChange * Time.deltaTime);
+            _slider.value = Mathf.MoveTowards(_slider.value, _player.CurrentValue, _player.StepChange * Time.deltaTime);
             yield return null;
         }
     }
